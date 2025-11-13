@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Kiddy Universe — Light. Learn. Dream.</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+	<meta name="theme-color" content="#a78bfa" />
+</head>
+<body class="font-[Nunito] bg-gradient-to-br from-violet-100 via-pink-50 to-emerald-100 min-h-screen text-slate-800 transition-colors duration-700 ease-out" id="bodyRoot">
+	<div id="app-container" class="app-container">
+		<!-- Decorative animated background layer -->
+		<div class="bg-orbs" aria-hidden="true">
+			<span class="orb orb-a"></span>
+			<span class="orb orb-b"></span>
+			<span class="orb orb-c"></span>
+		</div>
+	<!-- Floating Title / Tagline -->
+	<header class="fixed top-4 left-1/2 -translate-x-1/2 z-40 pointer-events-none">
+		<div class="glass px-5 py-2 rounded-full shadow-lg text-sm md:text-base">
+			<strong>Kiddy Universe</strong> — Where AI, Learning, and Imagination Meet.
+		</div>
+	</header>
+
+	<!-- Side Toggle Buttons -->
+	<aside class="side-buttons left fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30">
+		<button id="voice-btn" class="circle-btn side-btn" data-panel="voice" title="Voice Mode">🎙️</button>
+		<button id="story-btn" class="circle-btn side-btn" data-panel="story" title="Story Mode">📖</button>
+		<button id="video-btn" class="circle-btn side-btn" data-panel="video" title="Video Learning">🎬</button>
+	</aside>
+	<aside class="side-buttons right fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30">
+		<button id="grades-btn" class="circle-btn side-btn" data-panel="grades" title="Grades">🎓</button>
+		<button id="settings-btn" class="circle-btn side-btn" data-panel="settings" title="Settings">⚙️</button>
+	</aside>
+
+	<!-- Panels -->
+	<div id="panels">
+		<!-- Voice Panel -->
+		<section id="panel-voice" class="side-panel panel left">
+			<div class="panel-content">
+				<h2 class="panel-title">Voice Mode</h2>
+				<p class="mb-3 text-slate-600">Speak to learn or listen to AI answers.</p>
+				<div class="mic-visual my-4" id="micVisual">
+					<div class="mic-dot"></div>
+					<div class="mic-wave"></div>
+				</div>
+				<div class="flex items-center gap-3">
+					<button id="btnStartVoice" class="btn-primary">Start Listening</button>
+					<button id="btnStopVoice" class="btn-secondary">Stop</button>
+				</div>
+				<p class="text-xs mt-4 text-slate-500">Uses your browser's Web Speech API.</p>
+			</div>
+		</section>
+
+		<!-- Story Panel -->
+		<section id="panel-story" class="side-panel panel left">
+			<div class="panel-content">
+				<h2 class="panel-title">Story Mode</h2>
+				<p class="mb-3 text-slate-600">Interactive storybook learning experience.</p>
+				<div id="storybook" class="storybook">
+					<div class="page glass">
+						<h3 class="font-bold">Math Adventure</h3>
+						<p>Flip through ideas that explain with characters and worlds.</p>
+					</div>
+					<div class="page glass">
+						<h3 class="font-bold">Science Forest</h3>
+						<p>Meet friendly trees that whisper the secrets of nature.</p>
+					</div>
+					<div class="page glass">
+						<h3 class="font-bold">History Galaxy</h3>
+						<p>Travel time with starships powered by questions.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Video Panel -->
+		<section id="panel-video" class="side-panel panel right">
+			<div class="panel-content">
+				<h2 class="panel-title">Video Learning</h2>
+				<p class="mb-3 text-slate-600">Play short learning videos tailored to your grade.</p>
+				<div class="flex gap-2 mb-3">
+					<select id="videoSubject" class="input">
+						<option value="general">General</option>
+						<option value="math">Math</option>
+						<option value="science">Science</option>
+					</select>
+					<button id="btnLoadVideo" class="btn-primary">Load Video</button>
+				</div>
+				<div class="video-wrap glass">
+					<iframe id="videoPlayer" class="w-full aspect-video rounded-xl" src="" title="Kiddy Video" frameborder="0" allowfullscreen></iframe>
+					<div id="videoTitle" class="text-sm text-slate-600 mt-2"></div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Grades Panel -->
+		<section id="panel-grades" class="side-panel panel right">
+			<div class="panel-content">
+				<h2 class="panel-title">Choose Your Grade</h2>
+				<p class="mb-3 text-slate-600">Content will adapt to your level.</p>
+				<div class="grid grid-cols-5 gap-2 sm:grid-cols-10" id="gradeGrid"></div>
+				<p id="gradeWelcome" class="mt-4 text-sm text-slate-700"></p>
+			</div>
+		</section>
+
+		<!-- Settings Panel -->
+		<section id="panel-settings" class="side-panel panel right">
+			<div class="panel-content">
+				<h2 class="panel-title">Settings</h2>
+				<div class="grid gap-3">
+					<div class="setting-row">
+						<label class="setting-label">Theme</label>
+						<div class="flex gap-2">
+							<button data-theme="light" class="btn-chip">Light</button>
+							<button data-theme="dark" class="btn-chip">Dark</button>
+						</div>
+					</div>
+					<div class="setting-row">
+						<label class="setting-label">Background Animation</label>
+						<label class="switch">
+							<input type="checkbox" id="toggleAnimation" checked />
+							<span class="slider"></span>
+						</label>
+					</div>
+					<div class="setting-row">
+						<label class="setting-label">Font Size</label>
+						<input type="range" min="14" max="22" value="16" id="fontSizeRange" />
+					</div>
+					<div class="setting-row">
+						<label class="setting-label">Voice Speed</label>
+						<input type="range" min="0.8" max="1.6" step="0.1" value="1.0" id="voiceRateRange" />
+					</div>
+					<div class="setting-row">
+						<label class="setting-label">Theme Color</label>
+						<input type="color" id="themeColorPicker" value="#a78bfa" />
+					</div>
+					<div class="setting-row">
+						<button id="btnReset" class="btn-secondary">Reset All</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- Main Chat -->
+	<main class="container mx-auto px-4 pt-28 pb-28 max-w-5xl">
+		<div class="chat-wrap glass rounded-3xl p-4 md:p-6 shadow-xl">
+			<div id="chatList" class="chat-list space-y-4 overflow-y-auto max-h-[60vh] pr-2">
+				<div class="msg ai">
+					<div class="avatar">✨</div>
+					<div class="bubble">
+						Welcome to Kiddy Universe! Pick a mode or ask me anything.
+					</div>
+				</div>
+			</div>
+			<div class="input-bar mt-4 flex gap-2">
+				<div class="relative flex-1">
+					<input id="chatInput" class="input w-full pl-10 pr-24" type="text" placeholder="Type or speak your idea… Use @model" />
+					<button id="btnVoiceInline" class="inline-voice" title="Voice Input">🎙️</button>
+					<input id="imagePicker" type="file" accept="image/*" multiple class="hidden" />
+					<div class="input-actions">
+						<button id="btnAttach" class="icon-btn" title="Attach image">🖼️</button>
+						<button id="btnSearch" class="icon-btn" title="Web Search">🔎</button>
+					</div>
+					<div id="mentionMenu" class="mention-menu hidden">
+						<button data-model="gpt-4o-mini">@gpt-4o-mini</button>
+						<button data-model="gpt-4o">@gpt-4o</button>
+						<button data-model="gpt-4o-audio-preview">@gpt-4o-audio-preview</button>
+					</div>
+				</div>
+				<button id="btnSend" class="send-btn" title="Send">🚀</button>
+			</div>
+			<div id="attachPreview" class="attach-preview mt-2 hidden"></div>
+			<div class="flex items-center justify-between mt-2">
+				<div class="flex gap-2 text-xs text-slate-500">
+					<button class="btn-chip mode-chip mode-chat" data-mode="chat">Chat</button>
+					<button class="btn-chip mode-chip mode-story" data-mode="story">Story</button>
+					<button class="btn-chip mode-chip mode-explain" data-mode="explain">Explain</button>
+				</div>
+				<div class="flex gap-2 text-xs text-slate-500 items-center">
+					<label>Subject</label>
+					<select id="subjectSelect" class="input h-8 text-xs">
+						<option value="general">General</option>
+						<option value="math">Math</option>
+						<option value="science">Science</option>
+						<option value="history">History</option>
+					</select>
+					<label>Grade</label>
+					<select id="gradeSelect" class="input h-8 text-xs">
+						<option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option>
+						<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+	</div>
+</body>
+</html>
+
+
