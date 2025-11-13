@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -19,7 +18,7 @@ export default defineConfig({
     allowedHosts: [
       'kiddy-project.onrender.com',
       'localhost',
-      '.onrender.com' // This allows all render subdomains
+      '.onrender.com'
     ]
   },
   preview: {
@@ -27,8 +26,8 @@ export default defineConfig({
     port: process.env.PORT ? parseInt(process.env.PORT) : 4173,
     allowedHosts: [
       'kiddy-project.onrender.com',
-      'localhost', 
-      '.onrender.com' // This allows all render subdomains
+      'localhost',
+      '.onrender.com'
     ]
   },
   build: {
